@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="cetpro.png">
 <title>Sistema Académico - CETPRO Dionisia Herrera Alvarado</title>
 
 <!-- Font Awesome -->
@@ -298,7 +299,7 @@ footer {
       <div><i class="fa-solid fa-house"></i><span>Inicio</span></div>
       <i class="fa-solid fa-chevron-down"></i>
     </li>
-    <div class="submenu"><a href="inicio.html">Bienvenidos</a></div>
+    <div class="submenu"><a href="bienvenido.html">Bienvenidos</a></div>
 
 
 
@@ -424,6 +425,18 @@ docentes.forEach(d => {
       </div>
     </div>
   `;
+});
+
+
+/* ======== CARGAR NOMBRE DE USUARIO ======== */
+document.addEventListener('DOMContentLoaded', () => {
+  const usuarioActivo = localStorage.getItem('usuarioActivo');
+  const usuarioSpan = document.getElementById('usuario');
+  if (usuarioActivo) {
+    usuarioSpan.textContent = usuarioActivo;
+  } else {
+    window.location.href = 'login.html';
+  }
 });
 </script>
 </body>

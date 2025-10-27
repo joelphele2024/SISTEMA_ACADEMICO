@@ -65,8 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showMessage(`Bienvenido, ${encontrado.nombreCompleto}!`, 'success');
 
     setTimeout(() => {
-      window.location.href = 'inicio.html';
+      window.location.href = 'bienvenido.html';
     }, 800);
   });
 });
-

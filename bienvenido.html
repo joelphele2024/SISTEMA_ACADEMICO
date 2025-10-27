@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="cetpro.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sistema Académico - CETPRO Dionisia Herrera Alvarado</title>
 
 <!-- Font Awesome -->
@@ -219,7 +219,7 @@ footer {
   left: 70px;
 }
 
-/* ======== TABLA DE ESTUDIANTES ======== */
+/* ======== SECCIONES ======== */
 .section {
   background-color: white;
   border-radius: 10px;
@@ -228,34 +228,72 @@ footer {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.section h2 {
+.section h2, .section h3 {
   color: #2980b9;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-table {
+/* ======== CARRUSEL ======== */
+.carousel {
+  position: relative;
   width: 100%;
-  border-collapse: collapse;
+  max-width: 950px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
 }
 
-thead {
-  background-color: #3498db;
+.carousel-container {
+  display: flex;
+  gap: 10px;
+  transition: transform 0.6s ease-in-out;
+}
+
+.carousel img {
+  flex: 0 0 calc(33.33% - 10px);
+  height: 220px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
   color: white;
+  border: none;
+  font-size: 1.5em;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
 }
 
-th, td {
-  border: 1px solid #ddd;
+#prevBtn { left: 10px; }
+#nextBtn { right: 10px; }
+
+.unit {
+  background: #ecf0f1;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.unit:hover { background: #dce4ea; }
+
+.unit-content {
+  display: none;
+  margin-top: 8px;
+  background: #f9fafc;
   padding: 10px;
-  text-align: center;
+  border-left: 3px solid #3498db;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-tbody tr:hover {
-  background-color: #e1f0ff;
-}
+.unit.open .unit-content { display: block; }
 
 /* ======== RESPONSIVE ======== */
 @media (max-width: 768px) {
@@ -329,7 +367,7 @@ tbody tr:hover {
 
 <!-- ======== CONTENIDO PRINCIPAL ======== -->
 <div class="main">
-  <!-- CABECERA -->
+  <!-- CABECERA FIJA -->
   <div class="header">
     <button class="menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
     <h2>Sistema Académico - CETPRO Dionisia Herrera Alvarado</h2>
@@ -349,24 +387,67 @@ tbody tr:hover {
   <!-- CONTENIDO -->
   <div class="content">
     <div class="section">
-      <h2><i class="fa-solid fa-list"></i> Lista de Estudiantes - Especialidad de Carpintería</h2>
-      <table id="tablaEstudiantes">
-        <thead>
-          <tr>
-            <th>N°</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Género</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <h2><i class="fa-solid fa-hammer"></i> Programa de Estudios: Carpintería</h2>
+      <p>
+        La especialidad de <strong>Carpintería</strong> desarrolla habilidades en el trabajo con madera, desde el diseño y elaboración de muebles hasta la restauración y el acabado decorativo. Los estudiantes aprenden técnicas de tallado, ensamblaje y barnizado orientadas a la innovación artesanal y productiva.
+      </p><br>
+
+      <div class="carousel">
+        <div class="carousel-container" id="carousel">
+          <img src="img-carpinteria/img1.jpg" alt="Taller 1">
+          <img src="img-carpinteria/img2.jpg" alt="Taller 2">
+          <img src="img-carpinteria/img1.jpg" alt="Taller 3">
+          <img src="img-carpinteria/img2.jpg" alt="Taller 4">
+          <img src="img-carpinteria/img1.jpg" alt="Taller 5">
+        </div>
+        <button class="carousel-btn" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-btn" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3><i class="fa-solid fa-book"></i> Unidades Didácticas</h3>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 1: Tallados Básicos</span></div>
+        <div class="unit-content"><p>Ejecuta técnicas de tallado artesanal en madera.</p></div>
+      </div>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 2: Ensamblajes y Armados</span></div>
+        <div class="unit-content"><p>Realiza estructuras y mobiliarios artesanales.</p></div>
+      </div>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 3: Acabados Decorativos</span></div>
+        <div class="unit-content"><p>Aplica técnicas de acabado y decoración en madera.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3><i class="fa-solid fa-briefcase"></i> Unidades de Empleabilidad</h3>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 5: Empleabilidad 01</span></div>
+        <div class="unit-content"><p>Desarrolla habilidades para la inserción laboral y el emprendimiento.</p></div>
+      </div>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 4: Empleabilidad 02</span></div>
+        <div class="unit-content"><p>Desarrolla habilidades para la inserción laboral y el emprendimiento.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3><i class="fa-solid fa-diagram-project"></i> Prácticas y Proyecto de Aula</h3>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 5: Prácticas Preprofesionales</span></div>
+        <div class="unit-content"><p>Aplica los conocimientos en entornos reales de trabajo y desarrolla un proyecto final integrador.</p></div>
+      </div>
     </div>
   </div>
 
   <footer>© CETPRO Dionisia Herrera Alvarado 2025</footer>
 </div>
+
+
+
+
 
 <script>
 /* ======== SIDEBAR ======== */
@@ -382,6 +463,28 @@ function toggleSubmenu(element) {
   });
   nextSubmenu.style.display = nextSubmenu.style.display === 'flex' ? 'none' : 'flex';
 }
+
+/* ======== UNIDADES ======== */
+function toggleUnit(unit) {
+  unit.classList.toggle('open');
+}
+
+/* ======== CARRUSEL ======== */
+const carousel = document.getElementById('carousel');
+const totalImages = carousel.querySelectorAll('img').length;
+let index = 0;
+
+function showSlide(i) {
+  const visible = 3;
+  if (i < 0) index = totalImages - visible;
+  else if (i > totalImages - visible) index = 0;
+  else index = i;
+  carousel.style.transform = `translateX(${-index * (100 / visible)}%)`;
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => showSlide(index + 1));
+document.getElementById('prevBtn').addEventListener('click', () => showSlide(index - 1));
+setInterval(() => showSlide(index + 1), 4000);
 
 /* ======== MENÚ DEL USUARIO ======== */
 const userMenuBtn = document.getElementById('userMenuBtn');
@@ -403,39 +506,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (usuarioActivo) {
     usuarioSpan.textContent = usuarioActivo;
   } else {
+    // Si no hay usuario guardado, redirigir al login
     window.location.href = 'login.html';
   }
 });
-
-/* ======== GENERAR TABLA ALEATORIA ======== */
-const nombres = ["Joel", "María", "José", "Ana", "Carlos", "Lucía", "Pablo", "Elena", "Luis", "Rosa", "Diego", "Sandra", "Mario", "Camila", "Jorge", "Diana", "Ricardo", "Carla", "Omar", "Valeria"];
-const apellidos = ["Quispe", "Rojas", "Laura", "Huamán", "Flores", "Mendoza", "Cruz", "García", "Pérez", "Torres", "Ramírez", "Lopez", "Chávez", "Soto", "Silva", "Palomino"];
-const generos = ["M", "F"];
-const estados = ["Activo", "Retirado", "Suspendido"];
-
-function generarEstudiantes() {
-  const tbody = document.querySelector("#tablaEstudiantes tbody");
-  for (let i = 1; i <= 30; i++) {
-    const nombre = nombres[Math.floor(Math.random() * nombres.length)];
-    const apellido1 = apellidos[Math.floor(Math.random() * apellidos.length)];
-    const apellido2 = apellidos[Math.floor(Math.random() * apellidos.length)];
-    const genero = generos[Math.floor(Math.random() * generos.length)];
-    const estado = estados[Math.floor(Math.random() * estados.length)];
-
-    const fila = `
-      <tr>
-        <td>${i}</td>
-        <td>${nombre}</td>
-        <td>${apellido1} ${apellido2}</td>
-        <td>${genero}</td>
-        <td>${estado}</td>
-      </tr>
-    `;
-    tbody.insertAdjacentHTML('beforeend', fila);
-  }
-}
-
-generarEstudiantes();
 </script>
 </body>
 </html>

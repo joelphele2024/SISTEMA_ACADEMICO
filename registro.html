@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="cetpro.png">
+  <title>Registro de Usuario - CETPRO Dionisia Herrera Alvarado</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0066cc, #004a99);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      width: 95%;
+      max-width: 900px;
+      margin: 40px 20px;
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #1a237e;
+      margin-bottom: 25px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.9em;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 0.9em;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #1a73e8;
+      outline: none;
+      box-shadow: 0 0 4px rgba(26, 115, 232, 0.4);
+    }
+
+    .buttons {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: background 0.3s ease;
+    }
+
+    .guardar {
+      background-color: #1a73e8;
+      color: #fff;
+    }
+
+    .guardar:hover {
+      background-color: #0d47a1;
+    }
+
+    .cancelar {
+      background-color: #ccc;
+      color: #000;
+    }
+
+    .cancelar:hover {
+      background-color: #b0b0b0;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+      .buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Registrar Usuario - CETPRO Dionisia Herrera Alvarado</h2>
+    <form id="registroForm">
+      <div>
+        <label for="tipoDoc">Tipo Documento</label>
+        <select id="tipoDoc" required>
+          <option value="">Seleccione</option>
+          <option value="DNI">DNI</option>
+          <option value="CE">CE / PTP</option>
+          <option value="PAS">Pasaporte</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="numDoc">Número Documento</label>
+        <input type="text" id="numDoc" maxlength="12" required>
+      </div>
+
+      <div>
+        <label for="nombres">Nombres</label>
+        <input type="text" id="nombres" required>
+      </div>
+
+      <div>
+        <label for="apePat">Apellido Paterno</label>
+        <input type="text" id="apePat" required>
+      </div>
+
+      <div>
+        <label for="apeMat">Apellido Materno</label>
+        <input type="text" id="apeMat" required>
+      </div>
+
+      <div>
+        <label for="fechaNac">Fecha de Nacimiento</label>
+        <input type="date" id="fechaNac" required>
+      </div>
+
+      <div>
+        <label for="sexo">Sexo</label>
+        <select id="sexo" required>
+          <option value="">Seleccione</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" required>
+      </div>
+
+      <div>
+        <label for="correo">Correo Electrónico</label>
+        <input type="email" id="correo" required>
+      </div>
+
+      <div>
+        <label for="celular">Teléfono Celular</label>
+        <input type="tel" id="celular" required>
+      </div>
+
+      <div>
+        <label for="telefono">Teléfono Alternativo</label>
+        <input type="tel" id="telefono">
+      </div>
+
+      <div>
+        <label for="rol">Rol</label>
+        <select id="rol" required>
+          <option value="">Seleccione</option>
+          <option value="Estudiante">Estudiante</option>
+          <option value="Docente">Docente</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="periodo">Periodo Lectivo</label>
+        <input type="text" id="periodo" placeholder="Ej. 2025-I" required>
+      </div>
+
+      <div>
+        <label for="codigo">Código Modular</label>
+        <input type="text" id="codigo" value="0207696">
+      </div>
+
+      <div>
+        <label for="institucion">Institución</label>
+        <input type="text" id="institucion" value="CETPRO Dionisia Herrera Alvarado" readonly>
+      </div>
+
+      <div>
+        <label for="nivel">Nivel o Grado</label>
+        <select id="nivel" required>
+          <option value="">Seleccione</option>
+          <option value="Auxiliar Técnico">Auxiliar Técnico (1 año)</option>
+          <option value="Técnico">Técnico (2 años)</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="programa">Programa de Estudio</label>
+        <select id="programa" required>
+          <option value="">Seleccione un nivel primero</option>
+        </select>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="guardar">Guardar</button>
+        <button type="button" class="cancelar" onclick="window.location.href='login.html'">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const nivelSelect = document.getElementById('nivel');
+    const programaSelect = document.getElementById('programa');
+
+    const programas = {
+      "Auxiliar Técnico": [
+        "Apoyo Administrativo (1 año)",
+        "Costura y Acabados (1 año)",
+        "Soporte Tecnico y Operaciones de Centros de Computo (1 año)",
+        "Operaciones de Almacenamiento (1 año)",
+        "Albañilería (1 año)"
+      ],
+      "Técnico": [
+        "Carpintería (2 años)",
+        "Estilismo (2 años)",
+        "Topografía (2 años)",
+        "Cocina (2 años)",
+        "Electricidad (2 años)"
+      ]
+    };
+
+    nivelSelect.addEventListener('change', () => {
+      const nivel = nivelSelect.value;
+      programaSelect.innerHTML = '<option value="">Seleccione</option>';
+
+      if (programas[nivel]) {
+        programas[nivel].forEach(p => {
+          const option = document.createElement('option');
+          option.value = p;
+          option.textContent = p;
+          programaSelect.appendChild(option);
+        });
+      } else {
+        programaSelect.innerHTML = '<option value="">Seleccione un nivel primero</option>';
+      }
+    });
+
+    document.getElementById("registroForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("✅ Registro completado correctamente.");
+      this.reset();
+    });
+  </script>
+</body>
+</html>
