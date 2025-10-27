@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - Sistema Académico CETPRO Dionisia Herrera Alvarado</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body, html { width: 100%; height: 100%; }
+    .container { display: flex; height: 100vh; width: 100%; }
+
+    /* MITAD IZQUIERDA */
+    .left-section { flex: 1; background: linear-gradient(135deg,#0066cc,#004a99); color: white; display: flex; align-items: center; justify-content: center; padding: 40px; text-align: center; }
+    .left-section .center-content { max-width: 500px; }
+    .left-section h1 { font-size: 2.2em; margin-bottom: 10px; }
+    .left-section h2 { font-size: 1.4em; margin-bottom: 20px; }
+    .left-section p { font-size: 1em; line-height: 1.6; }
+    .left-section a { color: #fff; font-weight: bold; text-decoration: underline; }
+    .logo { width: 110px; height: 110px; margin-bottom: 25px; border-radius: 50%; border: 3px solid #fff; background-color: white; object-fit: cover; }
+
+    /* MITAD DERECHA */
+    .right-section { flex: 1.2; background-color: white; display: flex; align-items: center; justify-content: center; padding: 50px; }
+    .card { background: #f8f9fa; border-radius: 12px; padding: 50px 55px; width: 100%; max-width: 480px; box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+    .card h2 { color: #004a99; font-size: 1.8em; margin-bottom: 15px; }
+    .card p { font-size: 1em; color: #333; text-align: justify; margin-bottom: 25px; }
+
+    label { display: block; margin-bottom: 6px; font-weight: bold; color: #333; font-size: 1em; }
+    input[type="text"], input[type="password"] { width: 100%; padding: 14px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-size: 1em; }
+    input[type="text"]:focus, input[type="password"]:focus { border-color: #0066cc; box-shadow: 0 0 6px rgba(0,102,204,0.3); }
+
+    .password-wrap { position: relative; }
+    .password-wrap button { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2em; }
+
+    button#btnLogin { background-color: #0066cc; color: white; border: none; width: 100%; padding: 14px; border-radius: 8px; font-size: 1.1em; cursor: pointer; transition: background 0.3s; }
+    button#btnLogin:hover { background-color: #004a99; }
+
+    .links { text-align: center; margin-top: 20px; }
+    .links a { text-decoration: none; color: #0066cc; font-size: 1em; }
+    .links a:hover { text-decoration: underline; }
+
+    .message { margin-bottom: 15px; padding: 10px 12px; border-radius: 6px; font-size: 0.95em; display: none; }
+    .message.error { background: #ffe6e6; color: #a60000; border: 1px solid #f5c2c2; }
+    .message.success { background: #e8f6ea; color: #1f7a30; border: 1px solid #c7e7cf; }
+
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      .left-section { height: 45%; padding: 20px; }
+      .right-section { height: 55%; padding: 25px; }
+      .card { padding: 30px; max-width: 90%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- SECCIÓN IZQUIERDA -->
+    <div class="left-section">
+      <div class="center-content">
+        <img src="cetpro.png" alt="Logo CETPRO" class="logo">
+        <h1>Sistema Académico</h1>
+        <h2>CETPRO Dionisia Herrera Alvarado</h2>
+        <p style="text-align: justify">
+          El sistema académico del CETPRO Dionisia Herrera Alvarado permite gestionar de manera eficiente los procesos de matrícula, registro de notas, control de asistencia y administración de documentos.
+          <br><br>
+          Además, el CETPRO ofrece diversos programas de estudio orientados a la formación técnica y al desarrollo de competencias laborales. Los estudiantes pueden optar por las carreras de <strong>Auxiliar Técnico</strong> o <strong>Técnico</strong>, las cuales se imparten en turnos de mañana y tarde, permitiendo una formación flexiable que se adapta a las necesidades de jóvenes y adultos. <BR><BR><a href="https://www.ejemplo.com">Tutorial de Registro en el Sistema Academico</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- SECCIÓN DERECHA -->
+    <div class="right-section">
+      <div class="card">
+        <center><h2>Iniciar sesión</h2></center><br>
+        <p>Estimado estudiante, ingresa tus credenciales para acceder al sistema académico.</p>
+
+        <div id="msg" class="message"></div>
+
+        <form id="loginForm" autocomplete="off" novalidate>
+          <label for="usuario">Usuario</label>
+          <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario" required autocomplete="off" />
+
+          <label for="password">Contraseña</label>
+          <div class="password-wrap">
+            <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required autocomplete="off" />
+            <button type="button" id="togglePwd" aria-label="Mostrar contraseña">👁️</button>
+          </div>
+
+          <button type="submit" id="btnLogin">Ingresar</button>
+        </form>
+
+        <div class="links">
+          <a href="olcontraseña.html">¿Olvidó su contraseña?</a> |
+          <a href="registro.html">Registrarse</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script externo -->
+  <script src="usuariosu.js"></script>
+</body>
+</html>

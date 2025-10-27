@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Académico - CETPRO Dionisia Herrera Alvarado</title>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ======== ESTILOS GENERALES ======== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f6fa;
+  color: #333;
+  overflow: hidden;
+}
+
+/* ======== SIDEBAR ======== */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.sidebar.hidden {
+  width: 70px;
+}
+
+/* ======== LOGO ======== */
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: #1a252f;
+  gap: 10px;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.sidebar .logo span {
+  font-weight: bold;
+  font-size: 1em;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.hidden .logo span,
+.sidebar.hidden ul li span,
+.sidebar.hidden ul li i.fa-chevron-down {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ======== MENÚ ======== */
+.sidebar ul {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.sidebar ul li.menu-item {
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.sidebar ul li.menu-item:hover {
+  background-color: #34495e;
+}
+
+.sidebar ul li.menu-item div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ======== SUBMENÚ ======== */
+.submenu {
+  background-color: #34495e;
+  display: none;
+  flex-direction: column;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+.submenu a {
+  text-decoration: none;
+  color: #ecf0f1;
+  padding: 8px 45px;
+  display: block;
+  transition: background 0.3s;
+}
+
+.submenu a:hover {
+  background-color: #3b5773;
+}
+
+li.open .submenu {
+  display: flex;
+}
+
+/* ======== CONTENIDO PRINCIPAL ======== */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ======== CABECERA FIJA ======== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 250px;
+  right: 0;
+  background-color: #3498db;
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  transition: left 0.3s ease;
+}
+
+.sidebar.hidden ~ .main .header {
+  left: 70px;
+}
+
+.header .menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4em;
+  cursor: pointer;
+}
+
+/* ======== USUARIO Y MENÚ DESPLEGABLE ======== */
+.header .user {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+}
+
+.user-menu {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background: white;
+  color: #333;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  min-width: 160px;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.user-menu a {
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  transition: background 0.3s;
+}
+
+.user-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+/* ======== CONTENIDO SCROLLEABLE ======== */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 90px 20px 70px 20px;
+}
+
+/* ======== PIE DE PÁGINA ======== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 250px;
+  right: 0;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9em;
+  z-index: 10;
+  transition: left 0.3s ease;
+}
+
+.sidebar.hidden ~ .main footer {
+  left: 70px;
+}
+
+/* ======== SECCIONES ======== */
+.section {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.section h2, .section h3 {
+  color: #2980b9;
+  margin-bottom: 10px;
+}
+
+/* ======== CARRUSEL ======== */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.carousel-container {
+  display: flex;
+  gap: 10px;
+  transition: transform 0.6s ease-in-out;
+}
+
+.carousel img {
+  flex: 0 0 calc(33.33% - 10px);
+  height: 220px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 1.5em;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+#prevBtn { left: 10px; }
+#nextBtn { right: 10px; }
+
+.unit {
+  background: #ecf0f1;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.unit:hover { background: #dce4ea; }
+
+.unit-content {
+  display: none;
+  margin-top: 8px;
+  background: #f9fafc;
+  padding: 10px;
+  border-left: 3px solid #3498db;
+}
+
+.unit.open .unit-content { display: block; }
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    height: 100%;
+    left: -250px;
+    z-index: 999;
+  }
+  .sidebar.show { left: 0; }
+
+  .header, footer {
+    left: 0 !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ======== SIDEBAR ======== -->
+<div class="sidebar" id="sidebar">
+  <div class="logo">
+    <img src="cetpro.png" alt="Logo">
+    <span>Dionisia Herrera Alvarado</span>
+  </div>
+  <ul>
+
+
+    <li class="menu-item" onclick="toggleSubmenu(this)">
+      <div><i class="fa-solid fa-house"></i><span>Inicio</span></div>
+      <i class="fa-solid fa-chevron-down"></i>
+    </li>
+    <div class="submenu"><a href="inicio.html">Bienvenidos</a></div>
+
+
+
+    <li class="menu-item" onclick="toggleSubmenu(this)">
+      <div><i class="fa-solid fa-user-graduate"></i><span>Estudiantes</span></div>
+      <i class="fa-solid fa-chevron-down"></i>
+    </li>
+    <div class="submenu">
+      <a href="lista_estudiantes.html">Lista de Estudiantes</a>
+      <a href="#">Asistencia de Estudiantes</a>
+    </div>
+
+
+    
+
+ <li class="menu-item" onclick="toggleSubmenu(this)">
+      <div><i class="fa-solid fa-file-pen"></i><span>Notas</span></div>
+      <i class="fa-solid fa-chevron-down"></i>
+    </li>
+    <div class="submenu">
+      <a href="#">Registro Auxiliar</a>
+      <a href="#">Registro de Actas</a>
+    </div>
+
+
+      <li class="menu-item" onclick="toggleSubmenu(this)">
+      <div><i class="fa-solid fa-chalkboard-user"></i><span>Docentes</span></div>
+      <i class="fa-solid fa-chevron-down"></i>
+    </li>
+    <div class="submenu">
+      <a href="docente.html">Relacion de Docentes</a>
+    </div>
+
+
+    <li class="menu-item"><div><i class="fa-solid fa-chart-column"></i><span>Reportes</span></div></li>
+  </ul>
+</div>
+
+<!-- ======== CONTENIDO PRINCIPAL ======== -->
+<div class="main">
+  <!-- CABECERA FIJA -->
+  <div class="header">
+    <button class="menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+    <h2>Sistema Académico - CETPRO Dionisia Herrera Alvarado</h2>
+
+    <div class="user" id="userMenuBtn">
+      <i class="fa-solid fa-user"></i> 
+      <span id="usuario">Pablo Quispe Laura</span> 
+      <i class="fa-solid fa-caret-down"></i>
+
+      <div class="user-menu" id="userMenu">
+        <a href="#"><i class="fa-solid fa-gear"></i> Configuración</a>
+        <a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="content">
+    <div class="section">
+      <h2><i class="fa-solid fa-hammer"></i> Programa de Estudios: Carpintería</h2>
+      <p>
+        La especialidad de <strong>Carpintería</strong> desarrolla habilidades en el trabajo con madera, desde el diseño y elaboración de muebles hasta la restauración y el acabado decorativo. Los estudiantes aprenden técnicas de tallado, ensamblaje y barnizado orientadas a la innovación artesanal y productiva.
+      </p><br>
+
+      <div class="carousel">
+        <div class="carousel-container" id="carousel">
+          <img src="img-carpinteria/img1.jpg" alt="Taller 1">
+          <img src="img-carpinteria/img2.jpg" alt="Taller 2">
+          <img src="img-carpinteria/img1.jpg" alt="Taller 3">
+          <img src="img-carpinteria/img2.jpg" alt="Taller 4">
+          <img src="img-carpinteria/img1.jpg" alt="Taller 5">
+        </div>
+        <button class="carousel-btn" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-btn" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3><i class="fa-solid fa-book"></i> Unidades Didácticas</h3>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 1: Tallados Básicos</span></div>
+        <div class="unit-content"><p>Ejecuta técnicas de tallado artesanal en madera.</p></div>
+      </div>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 2: Ensamblajes y Armados</span></div>
+        <div class="unit-content"><p>Realiza estructuras y mobiliarios artesanales.</p></div>
+      </div>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 3: Acabados Decorativos</span></div>
+        <div class="unit-content"><p>Aplica técnicas de acabado y decoración en madera.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3><i class="fa-solid fa-briefcase"></i> Unidades de Empleabilidad</h3>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 5: Empleabilidad 01</span></div>
+        <div class="unit-content"><p>Desarrolla habilidades para la inserción laboral y el emprendimiento.</p></div>
+      </div>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 4: Empleabilidad 02</span></div>
+        <div class="unit-content"><p>Desarrolla habilidades para la inserción laboral y el emprendimiento.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3><i class="fa-solid fa-diagram-project"></i> Prácticas y Proyecto de Aula</h3>
+      <div class="unit" onclick="toggleUnit(this)">
+        <div class="unit-header"><span>Unidad 5: Prácticas Preprofesionales</span></div>
+        <div class="unit-content"><p>Aplica los conocimientos en entornos reales de trabajo y desarrolla un proyecto final integrador.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© CETPRO Dionisia Herrera Alvarado 2025</footer>
+</div>
+
+
+
+
+
+<script>
+/* ======== SIDEBAR ======== */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('hidden');
+}
+
+/* ======== SUBMENÚ ======== */
+function toggleSubmenu(element) {
+  const nextSubmenu = element.nextElementSibling;
+  document.querySelectorAll('.submenu').forEach(s => {
+    if (s !== nextSubmenu) s.style.display = 'none';
+  });
+  nextSubmenu.style.display = nextSubmenu.style.display === 'flex' ? 'none' : 'flex';
+}
+
+/* ======== UNIDADES ======== */
+function toggleUnit(unit) {
+  unit.classList.toggle('open');
+}
+
+/* ======== CARRUSEL ======== */
+const carousel = document.getElementById('carousel');
+const totalImages = carousel.querySelectorAll('img').length;
+let index = 0;
+
+function showSlide(i) {
+  const visible = 3;
+  if (i < 0) index = totalImages - visible;
+  else if (i > totalImages - visible) index = 0;
+  else index = i;
+  carousel.style.transform = `translateX(${-index * (100 / visible)}%)`;
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => showSlide(index + 1));
+document.getElementById('prevBtn').addEventListener('click', () => showSlide(index - 1));
+setInterval(() => showSlide(index + 1), 4000);
+
+/* ======== MENÚ DEL USUARIO ======== */
+const userMenuBtn = document.getElementById('userMenuBtn');
+const userMenu = document.getElementById('userMenu');
+
+userMenuBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  userMenu.style.display = userMenu.style.display === 'flex' ? 'none' : 'flex';
+});
+
+document.addEventListener('click', () => {
+  userMenu.style.display = 'none';
+});
+
+/* ======== CARGAR NOMBRE DE USUARIO ======== */
+document.addEventListener('DOMContentLoaded', () => {
+  const usuarioActivo = localStorage.getItem('usuarioActivo');
+  const usuarioSpan = document.getElementById('usuario');
+  if (usuarioActivo) {
+    usuarioSpan.textContent = usuarioActivo;
+  } else {
+    // Si no hay usuario guardado, redirigir al login
+    window.location.href = 'login.html';
+  }
+});
+</script>
+</body>
+</html>

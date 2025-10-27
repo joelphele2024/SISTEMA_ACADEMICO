@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Contraseña - Sistema Académico CETPRO</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0066cc, #004a99);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 400px;
+      padding: 35px 30px;
+      text-align: center;
+      animation: aparecer 0.8s ease-in-out;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #1a237e;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #555;
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 0.95em;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #1a73e8;
+      box-shadow: 0 0 4px rgba(26, 115, 232, 0.3);
+      outline: none;
+    }
+
+    .error-text {
+      color: red;
+      font-size: 0.8em;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .captcha-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .captcha {
+      font-family: "Courier New", monospace;
+      font-weight: bold;
+      background: #e8ebf0;
+      color: #1a237e;
+      padding: 10px 20px;
+      border-radius: 8px;
+      letter-spacing: 3px;
+      user-select: none;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: all 0.3s ease;
+    }
+
+    .enviar {
+      background-color: #1a73e8;
+      color: white;
+    }
+
+    .enviar:hover {
+      background-color: #0b56b3;
+      transform: scale(1.03);
+    }
+
+    .regresar {
+      background-color: white;
+      color: #1a73e8;
+      border: 2px solid #1a73e8;
+    }
+
+    .regresar:hover {
+      background-color: #e3f2fd;
+      transform: scale(1.03);
+    }
+
+    #recargar {
+      background: #fff;
+      border: 1px solid #555;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    #recargar:hover {
+      background: #e3f2fd;
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 0.8em;
+      color: #888;
+    }
+
+    footer span {
+      color: #1a237e;
+      font-weight: 600;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Olvidó Contraseña</h2>
+    <p>Seleccione su tipo de documento, número de usuario y correo electrónico registrado.</p>
+
+    <form id="recuperarForm">
+      <select id="tipoDoc" required>
+        <option value="">Seleccione tipo de documento</option>
+        <option value="DNI">DNI</option>
+        <option value="CE">CE / PTP</option>
+        <option value="PAS">Pasaporte</option>
+      </select>
+
+      <input type="text" id="usuario" placeholder="Ingrese su usuario" required>
+      <input type="email" id="correo" placeholder="Ingrese su correo electrónico" required>
+      <p class="error-text">Debe indicar su correo electrónico registrado en el sistema.</p>
+      <a href="#" style="color:#1a73e8; font-size:0.9em;">¿No recuerda su correo? Haga click aquí.</a>
+
+      <br><br>
+      <input type="text" id="codigo" placeholder="Ingrese código de la imagen" required>
+
+      <div class="captcha-box">
+        <div id="captcha" class="captcha"></div>
+        <button type="button" id="recargar">Recargar</button>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="enviar">Enviar</button>
+        <button type="button" class="regresar" onclick="window.location.href='login.html'">Regresar</button>
+      </div>
+    </form>
+
+    <footer>
+      <p>Copyright © 2025 <span>CETPRO Dionisia Herrera Alvarado</span>. Todos los derechos reservados.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Generar código captcha aleatorio
+    function generarCaptcha() {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      let code = "";
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      document.getElementById("captcha").innerText = code;
+      return code;
+    }
+
+    let codigoCaptcha = generarCaptcha();
+
+    document.getElementById("recargar").addEventListener("click", () => {
+      codigoCaptcha = generarCaptcha();
+    });
+
+    document.getElementById("recuperarForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const codigoIngresado = document.getElementById("codigo").value.trim();
+
+      if (codigoIngresado.toUpperCase() === codigoCaptcha) {
+        alert("✅ Solicitud enviada correctamente. Revise su correo electrónico.");
+        this.reset();
+        codigoCaptcha = generarCaptcha();
+      } else {
+        alert("❌ Código de verificación incorrecto. Intente nuevamente.");
+        codigoCaptcha = generarCaptcha();
+      }
+    });
+  </script>
+</body>
+</html>

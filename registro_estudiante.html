@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Académico - CETPRO Dionisia Herrera Alvarado</title>
+
+<!-- Font Awesome para iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ======== ESTILOS GENERALES ======== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f5f6fa;
+  display: flex;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+/* ======== SIDEBAR ======== */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  overflow-y: auto;
+}
+
+.sidebar.hidden {
+  width: 70px;
+}
+
+/* ======== LOGO ======== */
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: #1a252f;
+  gap: 10px;
+}
+
+.sidebar .logo img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+
+.sidebar .logo span {
+  font-weight: bold;
+  font-size: 1em;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.hidden .logo span,
+.sidebar.hidden ul li span,
+.sidebar.hidden ul li i.fa-chevron-down {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ======== MENÚ PRINCIPAL ======== */
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li.menu-item {
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+}
+
+.sidebar ul li.menu-item:hover {
+  background-color: #34495e;
+}
+
+.sidebar ul li.menu-item.active {
+  background-color: #2980b9;
+}
+
+.sidebar ul li.menu-item div {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espacio pequeño entre icono y texto */
+}
+
+.sidebar ul li.menu-item i {
+  font-size: 1em;
+}
+
+/* ======== SUBMENÚS ======== */
+.submenu {
+  background-color: #34495e;
+  display: none;
+  flex-direction: column;
+  font-size: 0.9em;
+  animation: fadeIn 0.3s ease;
+}
+
+.submenu a {
+  text-decoration: none;
+  color: #ecf0f1;
+  padding: 8px 45px;
+  display: block;
+  transition: background 0.3s;
+}
+
+.submenu a:hover {
+  background-color: #3b5773;
+}
+
+li.open .submenu {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======== CONTENIDO PRINCIPAL ======== */
+.main {
+  flex: 1;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3498db;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+}
+
+.header .menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4em;
+  cursor: pointer;
+}
+
+.header .user {
+  font-weight: bold;
+}
+
+.filter-box {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.filter-box input, 
+.filter-box select, 
+.filter-box button {
+  margin: 8px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  cursor: pointer;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+}
+
+button:hover {
+  background-color: #1f6391;
+}
+
+.table-container {
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #2980b9;
+  color: white;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    height: 100%;
+    left: -250px;
+    z-index: 999;
+  }
+
+  .sidebar.show {
+    left: 0;
+  }
+
+  .main {
+    padding: 15px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ======== SIDEBAR ======== -->
+<div class="sidebar" id="sidebar">
+  <div class="logo">
+    <img src="cetpro.png" alt="Logo">
+    <span>CETPRO D.H.A.</span>
+  </div>
+
+  <ul>
+    <!-- INICIO -->
+    <li class="menu-item" onclick="toggleSubmenu(this)">
+      <div><i class="fa-solid fa-house"></i><span>Inicio</span></div>
+      <i class="fa-solid fa-chevron-down"></i>
+    </li>
+    <div class="submenu">
+      <a href="#">Bienvenidos</a>
+    </div>
+
+    <!-- ESTUDIANTES -->
+    <li class="menu-item" onclick="toggleSubmenu(this)">
+      <div><i class="fa-solid fa-user-graduate"></i><span>Estudiantes</span></div>
+      <i class="fa-solid fa-chevron-down"></i>
+    </li>
+    <div class="submenu">
+      <a href="#">Lista de Estudiantes</a>
+      <a href="#">Otros</a>
+    </div>
+
+    <!-- OTROS MENÚS -->
+    <li class="menu-item"><div><i class="fa-solid fa-file-pen"></i><span>Notas</span></div></li>
+    <li class="menu-item"><div><i class="fa-solid fa-chalkboard-user"></i><span>Docentes</span></div></li>
+    <li class="menu-item"><div><i class="fa-solid fa-chart-column"></i><span>Reportes</span></div></li>
+    <li class="menu-item"><div><i class="fa-solid fa-gear"></i><span>Configuración</span></div></li>
+  </ul>
+</div>
+
+<!-- ======== CONTENIDO PRINCIPAL ======== -->
+<div class="main">
+  <div class="header">
+    <button class="menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+    <h2>Sistema Académico - CETPRO Dionisia Herrera Alvarado</h2>
+    <p class="user"><i class="fa-solid fa-user"></i> Bienvenido, <span id="usuario">Pablo Quispe</span></p>
+  </div>
+
+  <div class="filter-box">
+    <h3>Filtrar Estudiantes</h3>
+    <select id="periodo">
+      <option value="">Periodo lectivo</option>
+      <option value="2025-1">2025-1</option>
+    </select>
+    <select id="programa">
+      <option value="">Programa de estudio</option>
+      <option value="madera">Fabricación Artesanal de Productos de Madera</option>
+    </select>
+    <input type="text" id="nombre" placeholder="Nombre del estudiante">
+    <button onclick="filtrar()">Filtrar</button>
+    <button onclick="limpiar()">Limpiar</button>
+    <button onclick="nuevo()">Nuevo</button>
+  </div>
+
+  <div class="table-container">
+    <table id="tabla">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Periodo</th>
+          <th>Tipo institución</th>
+          <th>Institución</th>
+          <th>Tipo doc</th>
+          <th>N° Documento</th>
+          <th>Estudiante</th>
+          <th>Semestre</th>
+          <th>Programa</th>
+          <th>Módulo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td><td>2025-1</td><td>CETPRO</td><td>Dionisia Herrera Alvarado</td>
+          <td>DNI</td><td>76343756</td><td>Zuviategui Chacón José Luis</td>
+          <td>3</td><td>Fabricación Artesanal de Productos de Madera</td>
+          <td>M3 - Tallados y Decoraciones</td>
+        </tr>
+        <tr>
+          <td>2</td><td>2025-1</td><td>CETPRO</td><td>Dionisia Herrera Alvarado</td>
+          <td>DNI</td><td>74444357</td><td>Villafuerte Callapiña Carlos Manuel</td>
+          <td>3</td><td>Fabricación Artesanal de Productos de Madera</td>
+          <td>M3 - Tallados y Decoraciones</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// Ocultar / Mostrar barra lateral
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('hidden');
+}
+
+// Mostrar/ocultar submenús debajo
+function toggleSubmenu(element) {
+  const nextSubmenu = element.nextElementSibling;
+  document.querySelectorAll('.submenu').forEach(s => {
+    if (s !== nextSubmenu) s.style.display = 'none';
+  });
+  nextSubmenu.style.display = nextSubmenu.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// Filtros de ejemplo
+function filtrar() {
+  const nombre = document.getElementById('nombre').value.toLowerCase();
+  const filas = document.querySelectorAll('#tabla tbody tr');
+  filas.forEach(fila => {
+    fila.style.display = fila.textContent.toLowerCase().includes(nombre) ? '' : 'none';
+  });
+}
+
+function limpiar() {
+  document.getElementById('nombre').value = '';
+  filtrar();
+}
+
+function nuevo() {
+  alert('Función para registrar nuevo estudiante próximamente disponible.');
+}
+</script>
+
+</body>
+</html>
