@@ -5,6 +5,7 @@
 const usuarios = [
   { nombreCompleto: "Joel Phele Rojas", usuario: "joel", password: "73111584" },
   { nombreCompleto: "Jose Cjuno Rojas", usuario: "josecjuno", password: "12345678" },
+   { nombreCompleto: "Alumno de Prueba", usuario: "admin", password: "12345678" },
   { nombreCompleto: "Pablo Quispe Laura", usuario: "pabloql", password: "87654321" }
 ];
 
@@ -69,3 +70,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 800);
   });
 });
+
